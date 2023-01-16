@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {
-  Sidebar as ProSidebar,
+  Sidebar,
   Menu,
   MenuItem,
   useProSidebar,
@@ -22,8 +22,6 @@ import PieChartOutlineOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
-import { fontWeight } from '@mui/system';
-import { BorderRight, Square } from '@mui/icons-material';
 
 // TODO: Move this into its own component
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -31,45 +29,28 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   const colors = tokens(theme.palette.mode);
 
   return (
-    <MenuItem
-      active={selected === title}
-      style={{ color: colors.grey[100] }}
-      onClick={() => setSelected(title)}
-      icon={icon}
-    >
-      <Typography>{title}</Typography>
-      <Link to={to} />
-    </MenuItem>
+    <Link to={to}>
+      <MenuItem
+        active={selected === title}
+        style={{ color: colors.grey[100] }}
+        onClick={() => setSelected(title)}
+        icon={icon}
+      >
+        <Typography>{title}</Typography>
+      </MenuItem>
+    </Link>
   );
 };
 
-const Sidebar = () => {
+const NavMenu = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [selected, setSelected] = useState('Dashboard');
   const { collapsed, collapseSidebar } = useProSidebar();
 
   return (
-    <Box
-    /*       sx={{
-        '& .pro-sidebar-container': {
-          background: `${colors.primary[400]} !important`,
-        },
-        '& .pro-icon-wrapper': {
-          background: 'transparent !important',
-        },
-        '& .pro-inner-item': {
-          padding: '5px 35px 5px 20px !important',
-        },
-        '& .pro-inner-item:hover': {
-          color: '#868dfb !important',
-        },
-        '& .pro-menu-item.active': {
-          color: '#6870fa !important',
-        },
-      }} */
-    >
-      <ProSidebar
+    <Box style={{ display: 'flex', height: '100%' }}>
+      <Sidebar
         backgroundColor={colors.primary[400]}
         rootStyles={{
           ['.' + menuClasses.button]: {
@@ -159,6 +140,13 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Item
+              title="Manage Team"
+              to="/team"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -167,13 +155,6 @@ const Sidebar = () => {
               Data
             </Typography>
 
-            <Item
-              title="Manage Team"
-              to="/team"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
             <Item
               title="Contacts"
               to="/contacts"
@@ -257,9 +238,9 @@ const Sidebar = () => {
             />
           </Box>
         </Menu>
-      </ProSidebar>
+      </Sidebar>
     </Box>
   );
 };
 
-export default Sidebar;
+export default NavMenu;
