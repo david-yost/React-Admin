@@ -44,6 +44,8 @@ const Team = () => {
             backgroundColor={
               access === 'admin'
                 ? colors.greenAccent[600]
+                : access === 'manager'
+                ? colors.greenAccent[700]
                 : colors.greenAccent[700]
             }
             borderRadius="4px"
@@ -75,9 +77,6 @@ const Team = () => {
         sx={{
           '& .MuiDataGrid-root': {
             border: 'none',
-          },
-          '& .MuiSvgIcon-root': {
-            color: 'transparent',
           },
           '& .MuiDataGrid-cell': {
             borderBottom: 'none',
